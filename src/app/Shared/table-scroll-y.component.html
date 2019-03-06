@@ -1,4 +1,4 @@
-<table mdbTable mdbTableScroll scrollY="true" maxHeight="200" bordered="true">
+<table mdbTable mdbTableScroll scrollY="true" maxHeight="200" bordered="true" class='table table-bordered table-striped'>
         <thead>
           <tr>
             <th *ngFor="let head of headElements; let i = index" scope="col">{{head}}</th>
@@ -6,7 +6,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let el of elements; let i = index">
-            <th scope="row">{{el.from}}</th>
+            <td>{{el.from}}</td>
             <td>{{el.description}}</td>
             <td>{{el.amount}}</td>
             <td>{{el.date}}</td>

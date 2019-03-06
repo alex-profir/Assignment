@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Balance } from './Balance';
-import  {BalanceService } from './balance.service';
+import { BalanceService } from './balance.service';
+import { TableScrollYComponent} from "src/app/Shared/table-scroll.component"
 
 @Component({
     selector:'info-root',
@@ -15,8 +16,8 @@ export class AccountInfoComponent implements OnInit {
     ngOnInit():void{
         console.log("in onInit")
         this.balanceservice.getBalance().subscribe(
-            balance => {
-              this.balance = balance;
+            data => {
+              this.balance = data;
               console.log("goodies");
             },
             error => this.errorMessage = <any>error
