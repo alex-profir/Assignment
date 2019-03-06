@@ -1,0 +1,87 @@
+<div class='container'>
+    <div class='card'>
+        <div class='card-header bg-info text-white'>
+             <div class='row'>
+                <div class='col-md-4'> 
+                    <h2>Account Info</h2>
+                </div>
+             </div>
+        </div>
+        <div class='card-body'>
+            <div class='row'>
+                <div class='col-md-8'>
+                    <div class='row'>
+                        <div class='col'>Name:</div>
+                        <div class='col-sm-4'>{{balance.account.name}}</div>
+                    </div>
+                    <div class='row'>
+                        <div class='col'>Iban :</div>
+                        <div class='col-sm-4'>{{balance.account.iban}}</div>
+                    </div>
+                    <div class='row'>
+                        <div class='col'>Balance :</div>
+                        <div class='col-sm-4'>{{balance.account.balance|currency:'EUR':symbol:'1.2-2' }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div class='container'>
+    <div class='card'>
+        <div class='card-header'>
+             <h2>Add new entries:</h2>
+        </div>
+        <div class='card-body'>
+
+        </div>
+    </div>
+</div>
+<br>
+<div class='container'>
+    <div class='card'>
+        <div class='card-header'>
+        </div>
+        <div class='card-body'>
+              <table class='table table-bordered table-striped'>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor='let debit of balance.debitsAndCredits'>
+                        <td>{{debit.from}}</td>
+                        <td>{{debit.description}}</td>
+                        <td>{{debit.amount|currency :'EUR':symbol}}</td>
+                        <td>{{debit.date}}</td>
+                    </tr>
+                </tbody>
+              </table>
+        </div>
+    </div>
+</div>
+<!--
+              <table class='table table-bordered table-striped'>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor='let debit of balance.debitsAndCredits'>
+                        <td>{{debit.from}}</td>
+                        <td>{{debit.description}}</td>
+                        <td>{{debit.amount|currency :'EUR':symbol}}</td>
+                        <td>{{debit.date}}</td>
+                    </tr>
+                </tbody>
+              </table>
+-->
