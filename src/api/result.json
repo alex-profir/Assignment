@@ -11,6 +11,12 @@
             "description": "Diner",
             "amount": 10.50,
             "date": "2016-01-10T09:20:00.000Z"
+        },
+        {
+            "from": "Wendy",
+            "description": "Diner",
+            "amount": 10.50,
+            "date": "2016-01-10T09:20:00.000Z"
         }
     ]
 }

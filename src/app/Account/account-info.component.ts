@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Balance } from './Balance';
 import { BalanceService } from './balance.service';
 import { DebitsAndCredits } from './debitsAndCredits';
-import { FormGroup ,FormBuilder, Validators, AbstractControl, ValidatorFn} from '@angular/forms'
+import { FormGroup ,FormBuilder, Validators, AbstractControl, ValidatorFn , FormArray} from '@angular/forms'
 
 
 function amountRange(min: number, max: number): ValidatorFn {
@@ -30,7 +30,7 @@ export class AccountInfoComponent implements OnInit {
       
     }
     balance :Balance;
-    debitsInput:DebitsAndCredits;
+    debitsAndCredits: FormArray;
     ngOnInit():void{
         console.log("in onInit")
         this.balanceservice.getBalance().subscribe(
@@ -41,11 +41,22 @@ export class AccountInfoComponent implements OnInit {
             error => this.errorMessage = <any>error
           );
         this.balanceForm=this.fb.group({
-          from:['',[Validators.required,Validators.minLength(3)]],
-          description:['',[Validators.required,Validators.minLength(3)]],
-          amount:[null,amountRange(0,1000)],
-          date:new Date().toJSON(),
-        })
+          account:this.fb.group({
+            name:'',
+            iban:'',
+            balance:''
+          }),
+          currency:'',
+          debitsAndCredits:this.fb.array( [this.createDebits() ])
+          });
+    }
+    createDebits():FormGroup {
+      return this.fb.group({
+        from:['',[Validators.required,Validators.minLength(3)]],
+        description:['',[Validators.required,Validators.minLength(3)]],
+        amount:[null,amountRange(0,1000)],
+        date:new Date().toJSON()
+      });
     }
   
     save() {
