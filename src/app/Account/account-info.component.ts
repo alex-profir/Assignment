@@ -72,8 +72,30 @@ export class AccountInfoComponent implements OnInit {
       this.debitsAndCredits = this.balanceForm.get('items') as FormArray;
       this.debitsAndCredits.push(this.createDebits());
     }
-    save() {
+    saveTest() {
       console.log(this.balanceForm);
       console.log('Saved: ' + JSON.stringify(this.balanceForm.value));
+    }
+    saveProduct(): void {
+      if (this.balanceForm.valid) {
+        if (this.balanceForm.dirty) {
+          const p = { ...this.balance, ...this.balanceForm.value };
+            this.balanceservice.updateProduct(p)
+              .subscribe(
+                () => this.onSaveComplete(),
+                (error: any) => this.errorMessage = <any>error
+              );
+        } else {
+          this.onSaveComplete();
+        }
+      } else {
+        this.errorMessage = 'Please correct the validation errors.';
+      }
+    }
+  
+    onSaveComplete(): void {
+      // Reset the form to clear the flags
+      this.balanceForm.reset();
+      //this.router.navigate(['/products']);
     }
 }

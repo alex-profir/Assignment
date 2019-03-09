@@ -35,7 +35,7 @@
      </div>
         <div class='card-body'>
             <form novalidate
-                  (ngSubmit)="save()"
+                  (ngSubmit)="saveProduct()"
                   [formGroup]="balanceForm">
                   <div formArrayName="debitsAndCredits"
                       *ngFor="let debit of balanceForm.get('debitsAndCredits').controls; let i = index;">

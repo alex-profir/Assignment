@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
 
@@ -11,7 +11,7 @@ import { Balance } from './Balance';
 })
 
 export class BalanceService {
-    private productUrl = 'api/result.json';
+    private productUrl = 'http://localhost:8080/api/balance';
 
    constructor(private http: HttpClient) { }
   
@@ -20,6 +20,15 @@ export class BalanceService {
         tap(data => console.log('we did it')),
         catchError(this.handleError)
       );
+    }
+    updateProduct(product: Balance): Observable<Balance> {
+      const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      return this.http.put<Balance>(this.productUrl, product, { headers: headers })
+        .pipe(
+          tap(() => console.log('updateProduct: ')),
+          map(() => product),
+          catchError(this.handleError)
+        );
     }
   private handleError(err: HttpErrorResponse) {
     let errorMessage = '';
