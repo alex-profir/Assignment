@@ -1,8 +1,11 @@
-import { account } from './account';
-import { debitsAndCredits } from './debitsAndCredits';
+import { DebitsAndCredits } from './debitsAndCredits';
 
 export interface Balance{
-    account:account;
+    account:{
+        name:string;
+        iban:string;
+        balance:number;
+    }
     currency:string;
-    debitsAndCredits:debitsAndCredits[];
+    debitsAndCredits:DebitsAndCredits[];
 } 

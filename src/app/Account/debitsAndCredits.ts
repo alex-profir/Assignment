@@ -1,4 +1,4 @@
-export interface debitsAndCredits {
+export interface DebitsAndCredits {
     from :string;
     description:string;
     amount:number;
