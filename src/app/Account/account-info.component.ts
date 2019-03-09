@@ -32,11 +32,12 @@ export class AccountInfoComponent implements OnInit {
     balance :Balance;
     debitsAndCredits: FormArray;
     ngOnInit():void{
-        console.log("in onInit")
+        console.log("in onInit");
         this.balanceservice.getBalance().subscribe(
             data => {
               this.balance= data;
               console.log("goodies");
+          this.populateTestData();
             },
             error => this.errorMessage = <any>error
           );
@@ -50,6 +51,15 @@ export class AccountInfoComponent implements OnInit {
           debitsAndCredits:this.fb.array( [this.createDebits() ])
           });
     }
+    populateTestData(): void {
+      console.log('in test data');
+      this.balanceForm.patchValue({
+        account:{name: this.balance.account.name , iban:this.balance.account.iban ,balance:this.balance.account.balance} ,
+        currency: this.balance.currency,
+      });
+      this.balanceForm.setControl('tags', this.fb.array(this.balance.debitsAndCredits || []));
+    }
+  
     createDebits():FormGroup {
       return this.fb.group({
         from:['',[Validators.required,Validators.minLength(3)]],
@@ -58,7 +68,10 @@ export class AccountInfoComponent implements OnInit {
         date:new Date().toJSON()
       });
     }
-  
+    addItem(): void {
+      this.debitsAndCredits = this.balanceForm.get('items') as FormArray;
+      this.debitsAndCredits.push(this.createDebits());
+    }
     save() {
       console.log(this.balanceForm);
       console.log('Saved: ' + JSON.stringify(this.balanceForm.value));
