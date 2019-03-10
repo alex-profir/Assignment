@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Balance } from './Balance';
 import { BalanceService } from './balance.service';
 import { DebitsAndCredits } from './debitsAndCredits';
-import { FormGroup ,FormBuilder, Validators, AbstractControl, ValidatorFn, FormArray} from '@angular/forms'
+import { FormGroup ,FormBuilder, Validators, AbstractControl, ValidatorFn , FormArray} from '@angular/forms'
 
 
 function amountRange(min: number, max: number): ValidatorFn {
@@ -30,39 +30,53 @@ export class AccountInfoComponent implements OnInit {
       
     }
     balance :Balance;
-    debitsInput:DebitsAndCredits;
+    debitsAndCredits: FormArray;
     ngOnInit():void{
         console.log("in onInit");
-        this.balanceForm=this.fb.group({
-          amount:this.fb.group({
-            name:'',//data.account.name,
-            iban:'',//data.account.iban,
-            balance:null//data.account.balance
-          }),
-          currency:null,//data.currency,
-          debitsAndCredits:this.fb.group({
-            from:['',[Validators.required,Validators.minLength(3)]],
-            description:['',[Validators.required,Validators.minLength(3)]],
-            amount:[null,amountRange(0,1000)],
-            date:new Date().toJSON(),
-          })
-        });
         this.balanceservice.getBalance().subscribe(
             data => {
               this.balance= data;
               console.log("goodies");
-              this.updateForm(data);
+          this.populateTestData();
             },
             error => this.errorMessage = <any>error
           );
+        this.balanceForm=this.fb.group({
+          account:this.fb.group({
+            name:'',
+            iban:'',
+            balance:''
+          }),
+          currency:'',
+          debitsAndCredits:this.fb.array( [this.createDebits() ])
+          });
     }
-    updateForm(data:Balance):void{
-       
+    populateTestData(): void {
+      console.log('in test data');
+      this.balanceForm.patchValue({
+        account:{name: this.balance.account.name , iban:this.balance.account.iban ,balance:this.balance.account.balance} ,
+        currency: this.balance.currency,
+      });
+      this.balanceForm.setControl('tags', this.fb.array(this.balance.debitsAndCredits || []));
     }
-    get debitsAndCredits(): FormArray {
-      return <FormArray>this.balanceForm.get('tags');
+  
+    createDebits():FormGroup {
+      return this.fb.group({
+        from:['',[Validators.required,Validators.minLength(3)]],
+        description:['',[Validators.required,Validators.minLength(3)]],
+        amount:[null,amountRange(0,1000)],
+        date:new Date().toJSON()
+      });
     }
-    save(): void {
+    addItem(): void {
+      this.debitsAndCredits = this.balanceForm.get('items') as FormArray;
+      this.debitsAndCredits.push(this.createDebits());
+    }
+    saveTest() {
+      console.log(this.balanceForm);
+      console.log('Saved: ' + JSON.stringify(this.balanceForm.value));
+    }
+    saveProduct(): void {
       if (this.balanceForm.valid) {
         if (this.balanceForm.dirty) {
           const p = { ...this.balance, ...this.balanceForm.value };
@@ -78,10 +92,10 @@ export class AccountInfoComponent implements OnInit {
         this.errorMessage = 'Please correct the validation errors.';
       }
     }
+  
     onSaveComplete(): void {
       // Reset the form to clear the flags
       this.balanceForm.reset();
       //this.router.navigate(['/products']);
     }
-  
 }

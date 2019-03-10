@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse ,HttpHeaders} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
 
@@ -12,7 +12,7 @@ import { DebitsAndCredits } from './debitsAndCredits';
 })
 
 export class BalanceService {
-    private productUrl = 'api/result.json';
+    private productUrl = 'http://localhost:8080/api/balance';
 
    constructor(private http: HttpClient) { }
   
@@ -24,11 +24,9 @@ export class BalanceService {
     }
     updateProduct(product: Balance): Observable<Balance> {
       const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-      const url = `${this.productUrl}`;
-      return this.http.put<Balance>(url, product, { headers: headers })
+      return this.http.put<Balance>(this.productUrl, product, { headers: headers })
         .pipe(
           tap(() => console.log('updateProduct: ')),
-          // Return the product on an update
           map(() => product),
           catchError(this.handleError)
         );
