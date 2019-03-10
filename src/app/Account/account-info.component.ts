@@ -75,12 +75,15 @@ export class AccountInfoComponent implements OnInit {
       this.debitsAndCredits = this.balanceForm.get('debitsAndCredits') as FormArray;
       this.debitsAndCredits.push(this.createDebits());
     }
+    // used only to see the data change on the webpage ( doesn't actually send it)
     save() {
       console.log(this.balanceForm);
       console.log('Saved: ' + JSON.stringify(this.balanceForm.value));
       this.balance.debitsAndCredits.push(this.balanceForm.value);
+      this.balance.account.balance+=this.balanceForm.get('amount').value;
       this.onSaveComplete();
     }
+    //use this if you want to send it to the server ( note that it doens't work , yet ;) )
     saveProduct(): void {
       if (this.balanceForm.valid) {
         if (this.balanceForm.dirty) {
