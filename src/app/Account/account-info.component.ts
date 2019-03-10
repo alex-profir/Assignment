@@ -37,10 +37,12 @@ export class AccountInfoComponent implements OnInit {
             data => {
               this.balance= data;
               console.log("goodies");
-          this.populateTestData();
+          //  this.populateTestData();
             },
             error => this.errorMessage = <any>error
           );
+        this.balanceForm=this.createDebits();
+        /*
         this.balanceForm=this.fb.group({
           account:this.fb.group({
             name:'',
@@ -50,6 +52,7 @@ export class AccountInfoComponent implements OnInit {
           currency:'',
           debitsAndCredits:this.fb.array( [this.createDebits() ])
           });
+        */
     }
     populateTestData(): void {
       console.log('in test data');
@@ -57,7 +60,7 @@ export class AccountInfoComponent implements OnInit {
         account:{name: this.balance.account.name , iban:this.balance.account.iban ,balance:this.balance.account.balance} ,
         currency: this.balance.currency,
       });
-      this.balanceForm.setControl('tags', this.fb.array(this.balance.debitsAndCredits || []));
+      this.balanceForm.setControl('description', this.fb.array(this.balance.debitsAndCredits || []));
     }
   
     createDebits():FormGroup {
@@ -72,9 +75,11 @@ export class AccountInfoComponent implements OnInit {
       this.debitsAndCredits = this.balanceForm.get('items') as FormArray;
       this.debitsAndCredits.push(this.createDebits());
     }
-    saveTest() {
+    save() {
       console.log(this.balanceForm);
       console.log('Saved: ' + JSON.stringify(this.balanceForm.value));
+      this.balance.debitsAndCredits.push(this.balanceForm.value);
+      this.onSaveComplete();
     }
     saveProduct(): void {
       if (this.balanceForm.valid) {
@@ -96,6 +101,7 @@ export class AccountInfoComponent implements OnInit {
     onSaveComplete(): void {
       // Reset the form to clear the flags
       this.balanceForm.reset();
+      this.balanceForm=this.createDebits();
       //this.router.navigate(['/products']);
     }
 }

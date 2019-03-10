@@ -12,7 +12,7 @@ import { DebitsAndCredits } from './debitsAndCredits';
 })
 
 export class BalanceService {
-    private productUrl = 'http://localhost:8080/api/balance';
+    private productUrl = 'api/result.json';
 
    constructor(private http: HttpClient) { }
   
