@@ -72,7 +72,7 @@ export class AccountInfoComponent implements OnInit {
       });
     }
     addItem(): void {
-      this.debitsAndCredits = this.balanceForm.get('items') as FormArray;
+      this.debitsAndCredits = this.balanceForm.get('debitsAndCredits') as FormArray;
       this.debitsAndCredits.push(this.createDebits());
     }
     save() {
@@ -84,7 +84,9 @@ export class AccountInfoComponent implements OnInit {
     saveProduct(): void {
       if (this.balanceForm.valid) {
         if (this.balanceForm.dirty) {
-          const p = { ...this.balance, ...this.balanceForm.value };
+          
+          this.balance.debitsAndCredits.push(this.balanceForm.value);
+          const p = this.balance;
             this.balanceservice.updateProduct(p)
               .subscribe(
                 () => this.onSaveComplete(),
@@ -99,9 +101,7 @@ export class AccountInfoComponent implements OnInit {
     }
   
     onSaveComplete(): void {
-      // Reset the form to clear the flags
       this.balanceForm.reset();
       this.balanceForm=this.createDebits();
-      //this.router.navigate(['/products']);
     }
 }

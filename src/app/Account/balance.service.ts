@@ -26,7 +26,7 @@ export class BalanceService {
       const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
       return this.http.put<Balance>(this.productUrl, product, { headers: headers })
         .pipe(
-          tap(() => console.log('updateProduct: ')),
+          tap(() => console.log('updateProduct:')),
           map(() => product),
           catchError(this.handleError)
         );
