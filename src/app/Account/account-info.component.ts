@@ -3,6 +3,7 @@ import { Balance } from './Balance';
 import { BalanceService } from './balance.service';
 import { DebitsAndCredits } from './debitsAndCredits';
 import { FormGroup ,FormBuilder, Validators, AbstractControl, ValidatorFn , FormArray} from '@angular/forms'
+import { debounceTime } from 'rxjs/operators';
 
 
 function amountRange(min: number, max: number): ValidatorFn {
@@ -24,10 +25,12 @@ function amountRange(min: number, max: number): ValidatorFn {
 export class AccountInfoComponent implements OnInit {
     balanceForm:FormGroup;
     utc = new Date().toJSON();
-    errorMessage = '';
+    errorMessage = '';  
+
     constructor(private balanceservice: BalanceService,
                 private fb:FormBuilder) {
       
+
     }
     balance :Balance;
     debitsAndCredits: FormArray;
@@ -67,7 +70,7 @@ export class AccountInfoComponent implements OnInit {
       return this.fb.group({
         from:['',[Validators.required,Validators.minLength(3)]],
         description:['',[Validators.required,Validators.minLength(3)]],
-        amount:[null,amountRange(0,1000)],
+        amount:[null,[Validators.required ,amountRange(0,1000)]],
         date:new Date().toJSON()
       });
     }
@@ -75,7 +78,7 @@ export class AccountInfoComponent implements OnInit {
       this.debitsAndCredits = this.balanceForm.get('debitsAndCredits') as FormArray;
       this.debitsAndCredits.push(this.createDebits());
     }
-    // used only to see the data change on the webpage ( doesn't actually send it)
+    // used only to see the data change on the webpage ( doesn't actually send it  )
     save() {
       console.log(this.balanceForm);
       console.log('Saved: ' + JSON.stringify(this.balanceForm.value));
@@ -84,13 +87,14 @@ export class AccountInfoComponent implements OnInit {
       this.onSaveComplete();
     }
     //use this if you want to send it to the server ( note that it doens't work , yet ;) )
-    saveProduct(): void {
+    saveBalance(): void {
       if (this.balanceForm.valid) {
         if (this.balanceForm.dirty) {
           
+          this.balance.account.balance+=this.balanceForm.get('amount').value;
           this.balance.debitsAndCredits.push(this.balanceForm.value);
           const p = this.balance;
-            this.balanceservice.updateProduct(p)
+            this.balanceservice.updateBalance(p)
               .subscribe(
                 () => this.onSaveComplete(),
                 (error: any) => this.errorMessage = <any>error
@@ -101,6 +105,8 @@ export class AccountInfoComponent implements OnInit {
       } else {
         this.errorMessage = 'Please correct the validation errors.';
       }
+     // note that it should only be used to show data properly , delete after fixing whatever is going on 
+      this.onSaveComplete();
     }
   
     onSaveComplete(): void {

@@ -12,22 +12,24 @@ import { DebitsAndCredits } from './debitsAndCredits';
 })
 
 export class BalanceService {
-    private productUrl = 'api/result.json';
+    //private balanceUrl = 'api/result.json';
+   private balanceUrl = 'http://localhost:8080/api/balance';
+
 
    constructor(private http: HttpClient) { }
   
     getBalance(): Observable<Balance> {
-      return this.http.get<Balance>(this.productUrl).pipe(
+      return this.http.get<Balance>(this.balanceUrl).pipe(
         tap(data => console.log('we did it')),
         catchError(this.handleError)
       );
     }
-    updateProduct(product: Balance): Observable<Balance> {
+    updateBalance(balance: Balance): Observable<Balance> {
       const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-      return this.http.put<Balance>(this.productUrl, product, { headers: headers })
+      return this.http.put<Balance>(this.balanceUrl, balance, { headers: headers })
         .pipe(
-          tap(() => console.log('updateProduct:')),
-          map(() => product),
+          tap(() => console.log('updateBalance:')),
+          map(() => balance),
           catchError(this.handleError)
         );
     }
