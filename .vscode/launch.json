@@ -1,0 +1,57 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Launch Chrome",
+        "type": "chrome",
+        "request": "launch",
+        "url": "http://localhost:4200/#",
+        "webRoot": "${workspaceFolder}"
+      },
+      {
+        "name": "Launch Firefox",
+        "type": "firefox",
+        "request": "launch",
+        "url": "http://localhost:4200/#",
+        "webRoot": "${workspaceFolder}",
+      },
+      {
+        "name": "Launch Edge",
+        "type": "edge",
+        "request": "launch",
+        "url": "http://localhost:4200/#",
+        "webRoot": "${workspaceFolder}"
+      },
+      {
+        "name": "Attach Chrome",
+        "type": "chrome",
+        "request": "attach",
+        "url": "http://localhost:4200/#",
+        "webRoot": "${workspaceFolder}"
+      },
+      {
+        "name": "Launch Chrome (Test)",
+        "type": "chrome",
+        "request": "launch",
+        "url": "http://localhost:9876/debug.html",
+        "webRoot": "${workspaceFolder}"
+      },
+      {
+        "name": "Launch Chrome (E2E)",
+        "type": "node",
+        "request": "launch",
+        "program": "${workspaceFolder}/node_modules/protractor/bin/protractor",
+        "protocol": "inspector",
+        "args": ["${workspaceFolder}/e2e/protractor.conf.js"]
+      },
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "Generate Swagger",
+        "program": "${workspaceFolder}/dist/generate-swagger.js",
+        "outFiles": [
+            "${workspaceFolder}/dist/**/*.js"
+        ]
+      }
+    ]
+  }
