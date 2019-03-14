@@ -71,7 +71,8 @@ export class AccountInfoComponent implements OnInit {
         from:['',[Validators.required,Validators.minLength(3)]],
         description:['',[Validators.required,Validators.minLength(3)]],
         amount:[null,[Validators.required ,amountRange(0,1000)]],
-        date:new Date().toJSON()
+        date:new Date().toJSON(),
+        to:''
       });
     }
     addItem(): void {
@@ -93,7 +94,7 @@ export class AccountInfoComponent implements OnInit {
           
           this.balance.account.balance+=this.balanceForm.get('amount').value;
           this.balance.debitsAndCredits.push(this.balanceForm.value);
-          const p = this.balance;
+          const p = this.balanceForm.value;
             this.balanceservice.updateBalance(p)
               .subscribe(
                 () => this.onSaveComplete(),
