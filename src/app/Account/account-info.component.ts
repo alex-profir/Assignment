@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Balance } from './Balance';
-import { BalanceService } from './balance.service';
+import { BalanceService } from '../services/balance.service';
 import { DebitsAndCredits } from './debitsAndCredits';
-import { FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn, FormArray } from '@angular/forms'
+import { FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn, FormArray } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 
 
@@ -29,18 +29,18 @@ export class AccountInfoComponent implements OnInit {
   errorMessage = '';
 
   constructor(private balanceservice: BalanceService,
-    private fb: FormBuilder) {
+              private fb: FormBuilder) {
 
 
   }
   balance: Balance;
   ngOnInit(): void {
-    console.log("in onInit");
+    console.log('in onInit');
     for (let i = 1; i < 3; i++) {
       this.balanceservice.getBalance().subscribe(
         data => {
           this.balance = data;
-          console.log("goodies");
+          console.log('goodies');
           //  this.populateTestData();
         },
         error => this.errorMessage = <any>error
@@ -75,15 +75,16 @@ export class AccountInfoComponent implements OnInit {
     this.balance.account.balance += this.balanceForm.get('amount').value;
     this.onSaveComplete();
   }
-  //use this if you want to send it to the server ( note that it doens't work , yet ;) )
+  // use this if you want to send it to the server ( note that it doens't work , yet ;) )
   saveBalance(): void {
     if (this.balanceForm.valid) {
       if (this.balanceForm.dirty) {
 
-        if (this.balanceForm.get('to').value === 'me')
+        if (this.balanceForm.get('to').value === 'me') {
           this.balance.account.balance += this.balanceForm.get('amount').value;
-        else
+        } else {
           this.balance.account.balance += this.balanceForm.get('amount').value * (-1);
+        }
         this.balance.debitsAndCredits.push(this.balanceForm.value);
         const p = this.balanceForm.value;
         this.balanceservice.updateBalance(p)
@@ -105,16 +106,4 @@ export class AccountInfoComponent implements OnInit {
     this.balanceForm.reset();
     this.balanceForm = this.createDebits();
   }
-
-  setType(typeVia: string): void {
-    const amountControl = this.balanceForm.get('amount');
-    if (typeVia === 'me') {
-      amountControl.setValidators(amountRange(0, 1000));
-      //phoneControl.setValidators(Validators.required);
-    } else {
-      //amountControl.setValidators(amountRange(-1000,0));
-    }
-    amountControl.updateValueAndValidity();
-  }
-
 }
