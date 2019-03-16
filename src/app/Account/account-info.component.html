@@ -1,158 +1,157 @@
 <div class='container' *ngIf='balance'>
-    <div class='card'>
-        <div class='card-header bg-info text-white'>
-             <div class='row'>
-                <div class='col-md-4'> 
-                    <h2>Account Info</h2>
-                </div>
-             </div>
+  <div class='card'>
+    <div class='card-header bg-info text-white'>
+      <div class='row'>
+        <div class='col-md-4'>
+          <h2>Account Info</h2>
         </div>
-        <div class='card-body'>
-            <div class='row'>
-                <div class='col-md-8'>
-                    <div class='row'>
-                        <div class='col'>Name:</div>
-                        <div class='col-sm-4'>{{balance.account.name}}</div>
-                    </div>
-                    <div class='row'>
-                        <div class='col'>Iban :</div>
-                        <div class='col-sm-4'>{{balance.account.iban}}</div>
-                    </div>
-                    <div class='row'>
-                        <div class='col'>Balance :</div>
-                        <div class='col-sm-4'>{{balance.account.balance|currency:'EUR':symbol:'1.2-2' }}</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
+    <div class='card-body'>
+      <div class='row'>
+        <div class='col-md-8'>
+          <div class='row'>
+            <div class='col'>Name:</div>
+            <div class='col-sm-4'>{{balance.account.name}}</div>
+          </div>
+          <div class='row'>
+            <div class='col'>Iban :</div>
+            <div class='col-sm-4'>{{balance.account.iban}}</div>
+          </div>
+          <div class='row'>
+            <div class='col'>Balance :</div>
+            <div class='col-sm-4'>{{balance.account.balance|currency:'EUR':symbol:'1.2-2' }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 <br>
-<div class='container'  >
-    <div class='card'>
-        <div class='card-header bg-info text-white'>
-             <h2>Add new entries:</h2>
-     </div>
-        <div class='card-body'>
-            <form novalidate
-                  (ngSubmit)="saveBalance()"
-                  [formGroup]="balanceForm">
-                  <div class="form-group row mb-2">
-                        <label class="col-md-2 col-form-label"
-                               for="fromId">From:</label>
-                        <div class="col-md-8">
-                          <input class="form-control"
-                                 id="fromId"
-                                 type="text"
-                                 placeholder="From...(required)"
-                                 formControlName="from"
-                                 [ngClass]="{'is-invalid': (balanceForm.get('from').touched ||
+<div class='container'>
+  <div class='card'>
+    <div class='card-header bg-info text-white'>
+      <h2>Add new entries:</h2>
+    </div>
+    <div class='card-body'>
+      <form novalidate (ngSubmit)="saveBalance()" [formGroup]="balanceForm">
+        <div class="form-group row mb-2">
+          <label class="col-md-2 col-form-label" for="fromId">From:</label>
+          <div class="col-md-8">
+            <input class="form-control" id="fromId" type="text" placeholder="From...(required)" formControlName="from"
+              [ngClass]="{'is-invalid': (balanceForm.get('from').touched ||
                                  balanceForm.get('from').dirty) &&
                                                             !balanceForm.get('from').valid }" />
-                          <span class="invalid-feedback">
-                            <span *ngIf="balanceForm.get('from').errors?.required">
-                              Please enter your name.
-                            </span>
-                            <span *ngIf="balanceForm.get('from').errors?.minlength">
-                              The name must be longer than 3 characters.
-                            </span>
-                          </span>
-                        </div>
-                    </div>
+            <span class="invalid-feedback">
+              <span *ngIf="balanceForm.get('from').errors?.required">
+                Please enter your name.
+              </span>
+              <span *ngIf="balanceForm.get('from').errors?.minlength">
+                The name must be longer than 3 characters.
+              </span>
+            </span>
+          </div>
+        </div>
 
-                    <div class="form-group row mb-2">
-                            <label class="col-md-2 col-form-label"
-                                   for="descriptionId">Description:</label>
-                            <div class="col-md-8">
-                              <input class="form-control"
-                                     id="descriptionId"
-                                     type="text"
-                                     placeholder="Description...(required)"
-                                     formControlName="description"
-                                     [ngClass]="{'is-invalid': (balanceForm.get('description').touched ||
+        <div class="form-group row mb-2">
+          <label class="col-md-2 col-form-label" for="descriptionId">Description:</label>
+          <div class="col-md-8">
+            <input class="form-control" id="descriptionId" type="text" placeholder="Description...(required)"
+              formControlName="description" [ngClass]="{'is-invalid': (balanceForm.get('description').touched ||
                                      balanceForm.get('description').dirty) &&
                                                                 !balanceForm.get('description').valid }" />
-                              <span class="invalid-feedback">
-                                <span *ngIf="balanceForm.get('description').errors?.required">
-                                  A description is required
-                                </span>
-                                <span *ngIf="balanceForm.get('description').errors?.minlength">
-                                  The description must be longer than 3 characters
-                                </span>
-                              </span>
-                            </div>
-                        </div>
+            <span class="invalid-feedback">
+              <span *ngIf="balanceForm.get('description').errors?.required">
+                A description is required
+              </span>
+              <span *ngIf="balanceForm.get('description').errors?.minlength">
+                The description must be longer than 3 characters
+              </span>
+            </span>
+          </div>
+        </div>
 
-                        
-                    <div class="form-group row mb-2">
-                            <label class="col-md-2 col-form-label"
-                                   for="amountId">Amount:</label>
-                            <div class="col-md-8">
-                              <input class="form-control"
-                                     id="amountId"
-                                     type="number"
-                                     placeholder="Amount...(required)"
-                                     formControlName="amount"
-                                     [ngClass]="{'is-invalid': (balanceForm.get('amount').touched ||
+
+        <div class="form-group row mb-2">
+          <label class="col-md-2 col-form-label" for="amountId">Amount:</label>
+          <div class="col-md-8">
+            <input class="form-control" id="amountId" type="number" placeholder="Amount...(required)"
+              formControlName="amount" [ngClass]="{'is-invalid': (balanceForm.get('amount').touched ||
                                      balanceForm.get('amount').dirty) &&
                                                                 !balanceForm.get('amount').valid }" />
-                              <span class="invalid-feedback">
-                                <span *ngIf="balanceForm.get('amount').errors?.required">
-                                  An amount is required
-                                </span>
-                                <span *ngIf="balanceForm.get('amount').errors?.range">
-                                    The number you entered is not in the allowed range ( if you wish to enter a larger number please visit your local bank)
-                                </span>
-                              </span>
-                            </div>
-                      </div>
-                        <div class="form-group row mb-2">                    
-                          <button class="btn btn-primary mr-3"
-                                  type="submit"
-                                  style="width:80px"
-                                  [title]="balanceForm.valid ? 'Save your entered data' : 'Disabled until the form data is valid'"
-                                  [disabled]="!balanceForm.valid">
-                                  Save
-                                </button>
-                        </div>
-            </form>
-        </div> 
+            <span class="invalid-feedback">
+              <span *ngIf="balanceForm.get('amount').errors?.required">
+                An amount is required
+              </span>
+              <span *ngIf="balanceForm.get('amount').errors?.range">
+                The number you entered is not in the allowed range ( if you wish to enter a larger number please visit
+                your local bank)
+              </span>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group row mb-2">
+          <label class="col-md-2 col-form-label pt-0">Type of transfer</label>
+          <div class="col-md-8">
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" value="me" formControlName="to"> Credit
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" value="other" formControlName="to"> Debit
+              </label>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="form-group row mb-2">
+          <button class="btn btn-primary mr-3" type="submit" style="width:80px"
+            [title]="balanceForm.valid ? 'Save your entered data' : 'Disabled until the form data is valid'"
+            [disabled]="!balanceForm.valid">
+            Save
+          </button>
+        </div>
+      </form>
     </div>
+  </div>
 </div>
 <br>
-<div class='container'*ngIf='balance'>
-    <div class='card'>
-        <div class='card-header'>
-        </div>
-        <div class='card-body'>
-              <table class='table table-bordered table-striped'>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Amount</th>
-                        <th>Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!--
-                    <tr>
-                        <td>{{fromInput}}</td>
-                        <td>{{descriptionInput}}</td>
-                        <td>{{amountInput}}</td>
-                        <td>{{dateInput}}</td>
-                    </tr>
-                -->
-                    <tr *ngFor='let debit of balance.debitsAndCredits'>
-                        <td>{{debit.from}}</td>
-                        <td>{{debit.description}}</td>
-                        <td>{{debit.amount|currency :'EUR':symbol}}</td>
-                        <td>{{debit.date}}</td>
-                    </tr>
-                </tbody>
-              </table>
-        </div>
+<div class='container' *ngIf='balance'>
+  <div class='card'>
+    <div class='card-header'>
     </div>
+    <div class='card-body'>
+      <table class='table table-bordered table-striped'>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Increase</th>
+            <th>Decrease</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor='let debit of balance.debitsAndCredits'>
+            <td>{{debit.from}}</td>
+            <td>{{debit.description}}</td>
+            <td *ngIf="debit.to === 'me'" class="green-text">
+              + {{debit.amount|currency :'EUR':symbol}}
+            </td>
+            <td></td>
+            <td *ngIf="debit.to === 'other'" class="red-text">
+              - {{debit.amount|currency :'EUR':symbol}}
+            </td>
+            <td>{{debit.date }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
 <br>Dirty: {{ balanceForm.dirty }}
 <br>Touched: {{ balanceForm.touched }}

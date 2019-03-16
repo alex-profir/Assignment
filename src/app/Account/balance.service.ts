@@ -24,9 +24,9 @@ export class BalanceService {
         catchError(this.handleError)
       );
     }
-    updateBalance(balance: Balance): Observable<Balance> {
+    updateBalance(balance: DebitsAndCredits): Observable<DebitsAndCredits> {
       const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-      return this.http.put<Balance>(this.balanceUrl + "/add", balance, { headers: headers })
+      return this.http.put<DebitsAndCredits>(this.balanceUrl + "/add", balance, { headers: headers })
         .pipe(
           tap(() => console.log('updateBalance:')),
           map(() => balance),

@@ -77,7 +77,11 @@ async function handleAddBalance(req, res) {
     }
 
     accountJackTorrance.debitsAndCredits.push(debitOrCredit);
-    accountJackTorrance.account.balance += debitOrCredit.amount;
+    if(debitOrCredit.to === 'me')
+     accountJackTorrance.account.balance += debitOrCredit.amount;
+    else
+     accountJackTorrance.account.balance -= debitOrCredit.amount;
+
 
     res.writeHead(200);
     res.end();
