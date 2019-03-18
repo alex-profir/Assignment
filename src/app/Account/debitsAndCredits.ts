@@ -3,4 +3,5 @@ export interface DebitsAndCredits {
     description:string;
     amount:number;
     date:string;
+    to:'';
 }

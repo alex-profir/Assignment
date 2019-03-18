@@ -49,10 +49,8 @@ export class AccountInfoComponent implements OnInit {
     }
     this.balanceForm = this.createDebits();
     this.balanceForm.get('to').valueChanges.subscribe(
-     () => this.setType()
-    );
-
-
+      () => this.setType()
+     );
   }
   setDebitData(): void {
     const aux: string = this.balanceForm.get('from').value;
@@ -116,6 +114,10 @@ export class AccountInfoComponent implements OnInit {
   onSaveComplete(): void {
     this.balanceForm.reset();
     this.balanceForm = this.createDebits();
+    this.balanceForm.get('to').valueChanges.subscribe(
+      () => this.setType()
+     );
+    this.isCredit = true;
   }
   setType(): void {
     this.isCredit = !this.isCredit;

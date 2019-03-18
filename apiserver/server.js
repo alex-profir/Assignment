@@ -83,7 +83,12 @@ async function handleAddBalance(req, res) {
     else {
         accountJackTorrance.account.balance -= debitOrCredit.amount;
     }
-
+    const fs = require('fs');
+    let data = JSON.stringify(accountJackTorrance, null, 2);  
+    fs.writeFile('apiserver/result.json', data, (err) => {  
+        if (err) throw err;
+        console.log('Data written to file');
+    });
     res.writeHead(200);
     res.end();
 }
