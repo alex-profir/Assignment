@@ -36,9 +36,10 @@
     <div class='card-body'>
       <form novalidate (ngSubmit)="saveBalance()" [formGroup]="balanceForm">
         <div class="form-group row mb-2">
-          <label class="col-md-2 col-form-label" for="fromId">From:</label>
+          <label class="col-md-2 col-form-label" for="fromId">
+            {{isCredit ? "From" : "To"}} </label>
           <div class="col-md-8">
-            <input class="form-control" id="fromId" type="text" placeholder="From...(required)" formControlName="from"
+            <input class="form-control" id="fromId" type="text" placeholder="{{isCredit ? 'From' : 'To'}}...(required)" formControlName="from"
               [ngClass]="{'is-invalid': (balanceForm.get('from').touched ||
                                  balanceForm.get('from').dirty) &&
                                                             !balanceForm.get('from').valid }" />
@@ -96,12 +97,12 @@
           <div class="col-md-8">
             <div class="form-check form-check-inline">
               <label class="form-check-label">
-                <input class="form-check-input" type="radio" value="me" formControlName="to"> Credit
+                <input class="form-check-input" type="radio" value="credit" formControlName="to"> Credit
               </label>
             </div>
             <div class="form-check form-check-inline">
               <label class="form-check-label">
-                <input class="form-check-input" type="radio" value="other" formControlName="to"> Debit
+                <input class="form-check-input" type="radio" value="debit" formControlName="to"> Debit
               </label>
             </div>
           </div>
@@ -126,40 +127,41 @@
     </div>
     <div class='card-body'>
       <div id="table-scroll">
-      <table class='table table-bordered table-striped '>
-        <!--table table-fixed table-condensed , , table table-bordered table-striped-->
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Increase</th>
-            <th>Decrease</th>
-            <th>Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor='let debit of balance.debitsAndCredits'>
-            <td>{{debit.from}}</td>
-            <td>{{debit.description}}</td>
-            <td *ngIf="debit.to === 'me'" class="green-text">
-              + {{debit.amount|currency :'EUR':symbol}}
-            </td>
-            <td></td>
-            <td *ngIf="debit.to === 'other'" class="red-text">
-              - {{debit.amount|currency :'EUR':symbol}}
-            </td>
-            <td >{{debit.date|date:'medium'}}</td>
-          </tr>
-        </tbody>
-      </table>
+        <table class='table table-bordered table-striped '>
+          <!--table table-fixed table-condensed , , table table-bordered table-striped-->
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Increase</th>
+              <th>Decrease</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor='let debit of balance.debitsAndCredits'>
+              <td *ngIf="debit.from">{{debit.from}}</td>
+              <td *ngIf="debit.to">{{debit.to}}</td>
+              <td>{{debit.description}}</td>
+              <td *ngIf="debit.from" class="green-text">
+                + {{debit.amount|currency :'EUR':symbol}}
+              </td>
+              <td></td>
+              <td *ngIf="debit.to" class="red-text">
+                - {{debit.amount|currency :'EUR':symbol}}
+              </td>
+              <td>{{debit.date|date:'medium'}}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
 </div>
-<!--
+<!-- 
 <br>Dirty: {{ balanceForm.dirty }}
 <br>Touched: {{ balanceForm.touched }}
 <br>Valid: {{ balanceForm.valid }}
 <br>Value: {{ balanceForm.value | json }}
-<br>&nbsp;
+<br>&nbsp; 
 -->

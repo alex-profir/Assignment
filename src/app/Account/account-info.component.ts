@@ -27,6 +27,7 @@ export class AccountInfoComponent implements OnInit {
   balanceForm: FormGroup;
   utc = new Date().toJSON();
   errorMessage = '';
+  isCredit = true;
 
   constructor(private balanceservice: BalanceService,
               private fb: FormBuilder) {
@@ -47,24 +48,31 @@ export class AccountInfoComponent implements OnInit {
       );
     }
     this.balanceForm = this.createDebits();
+    this.balanceForm.get('to').valueChanges.subscribe(
+     () => this.setType()
+    );
+
 
   }
-  populateTestData(): void {
-    console.log('in test data');
+  setDebitData(): void {
+    const aux: string = this.balanceForm.get('from').value;
     this.balanceForm.patchValue({
-      account: { name: this.balance.account.name, iban: this.balance.account.iban, balance: this.balance.account.balance },
-      currency: this.balance.currency,
+      from: '',
+      to: aux
     });
-    this.balanceForm.setControl('description', this.fb.array(this.balance.debitsAndCredits || []));
   }
-
+  setCreditData(): void {
+    this.balanceForm.patchValue({
+      to: ''
+    });
+  }
   createDebits(): FormGroup {
     return this.fb.group({
       from: ['', [Validators.required, Validators.minLength(3)]],
       description: ['', [Validators.required, Validators.minLength(3)]],
       amount: [null, [Validators.required, amountRange(0, 1000)]],
       date: new Date().toJSON(),
-      to: 'me'
+      to: 'credit'// note that it's used only for choices , after it's value will be either the 'from' string or undefined
     });
   }
   // used only to see the data change on the webpage ( doesn't actually send it  )
@@ -79,11 +87,15 @@ export class AccountInfoComponent implements OnInit {
   saveBalance(): void {
     if (this.balanceForm.valid) {
       if (this.balanceForm.dirty) {
-
-        if (this.balanceForm.get('to').value === 'me') {
+        if (!this.isCredit) {
+          this.setDebitData();
+        } else {
+          this.setCreditData();
+        }
+        if (this.balanceForm.get('from').value) {
           this.balance.account.balance += this.balanceForm.get('amount').value;
         } else {
-          this.balance.account.balance += this.balanceForm.get('amount').value * (-1);
+          this.balance.account.balance -= this.balanceForm.get('amount').value;
         }
         this.balance.debitsAndCredits.push(this.balanceForm.value);
         const p = this.balanceForm.value;
@@ -98,12 +110,14 @@ export class AccountInfoComponent implements OnInit {
     } else {
       this.errorMessage = 'Please correct the validation errors.';
     }
-    // note that it should only be used to show data properly , delete after fixing whatever is going on 
     this.onSaveComplete();
   }
 
   onSaveComplete(): void {
     this.balanceForm.reset();
     this.balanceForm = this.createDebits();
+  }
+  setType(): void {
+    this.isCredit = !this.isCredit;
   }
 }
