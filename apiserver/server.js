@@ -85,12 +85,18 @@ async function handleAddBalance(req, res) {
     }
     const fs = require('fs');
     let data = JSON.stringify(accountJackTorrance, null, 2);  
-    fs.writeFile('apiserver/result.json', data, (err) => {  
-        if (err) throw err;
-        console.log('Data written to file');
+    fs.writeFile('result.json', data, (err) => {  
+        if (err) {
+            res.writeHead(500)
+            res.write(err.message);
+            res.end()
+        }else {
+            console.log('Data written to file');
+            
+            res.writeHead(200);
+            res.end();
+        }
     });
-    res.writeHead(200);
-    res.end();
 }
 
 function readRequestAsJson(req) {
