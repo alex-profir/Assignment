@@ -12,12 +12,11 @@ import { DebitsAndCredits } from '../account/debitsAndCredits';
 })
 
 export class BalanceService {
-    //private balanceUrl = 'api/result.json';
+    // private balanceUrl = 'api/result.json';
    private balanceUrl = 'http://localhost:8080/api/balance';
 
 
    constructor(private http: HttpClient) { }
-  
     getBalance(): Observable<Balance> {
       return this.http.get<Balance>(this.balanceUrl).pipe(
         tap(data => console.log('we did it')),
@@ -26,7 +25,7 @@ export class BalanceService {
     }
     updateBalance(balance: DebitsAndCredits): Observable<DebitsAndCredits> {
       const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-      return this.http.put<DebitsAndCredits>(this.balanceUrl + "/add", balance, { headers: headers })
+      return this.http.put<DebitsAndCredits>(this.balanceUrl + '/add', balance, { headers: headers })
         .pipe(
           tap(() => console.log('updateBalance:')),
           map(() => balance),

@@ -1,17 +1,45 @@
 {
-    "account": {
-        "name": "Jack Torrance",
-        "iban": "HTB0001234567",
-        "balance": 10.50
+  "account": {
+    "name": "Jack Torrance",
+    "iban": "HTB0001234567",
+    "balance": 10.5
+  },
+  "currency": "EURO",
+  "debitsAndCredits": [
+    {
+      "from": "Wendy",
+      "description": "Diner",
+      "amount": 10.5,
+      "date": "2016-01-10T09:20:00.000Z",
+      "to": ""
     },
-    "currency": "EURO",
-    "debitsAndCredits": [
-        {
-            "from": "Wendy",
-            "description": "Diner",
-            "amount": 10.50,
-            "date": "2016-01-10T09:20:00.000Z",
-            "to":""
-        }
-    ]
+    {
+      "from": "George",
+      "description": "Lucas",
+      "amount": 123,
+      "date": "2019-03-24T20:14:27.183Z",
+      "to": ""
+    },
+    {
+      "from": "Minecraft",
+      "description": "Hola",
+      "amount": 123,
+      "date": "2019-03-24T20:14:33.247Z",
+      "to": ""
+    },
+    {
+      "from": "",
+      "description": "Frone",
+      "amount": 123,
+      "date": "2019-03-24T20:14:53.942Z",
+      "to": "Gigel"
+    },
+    {
+      "from": "",
+      "description": "123",
+      "amount": 123,
+      "date": "2019-03-24T20:15:38.232Z",
+      "to": "123"
+    }
+  ]
 }

@@ -74,8 +74,11 @@ async function handleAddBalance(req, res) {
 
     if (!propsValid) {
         throw new HttpError(400, 'Incorrect message.');
+    }   
+    const random = Math.random();
+    if (random >= 0.4) {
+        throw new HttpError(503);
     }
-
     accountJackTorrance.debitsAndCredits.push(debitOrCredit);
     if (debitOrCredit.from) {
         accountJackTorrance.account.balance += debitOrCredit.amount;
@@ -84,7 +87,7 @@ async function handleAddBalance(req, res) {
         accountJackTorrance.account.balance -= debitOrCredit.amount;
     }
     const fs = require('fs');
-    let data = JSON.stringify(accountJackTorrance, null, 2);  
+    const data = JSON.stringify(accountJackTorrance, null, 2);  
     fs.writeFile('result.json', data, (err) => {  
         if (err) {
             res.writeHead(500)
