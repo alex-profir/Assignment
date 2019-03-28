@@ -2,7 +2,7 @@
   "account": {
     "name": "Jack Torrance",
     "iban": "HTB0001234567",
-    "balance": 280.5
+    "balance": 10.5
   },
   "currency": "EURO",
   "debitsAndCredits": [
@@ -12,76 +12,6 @@
       "amount": 10.5,
       "date": "2016-01-10T09:20:00.000Z",
       "to": ""
-    },
-    {
-      "from": "George",
-      "description": "Lucas",
-      "amount": 123,
-      "date": "2019-03-24T20:14:27.183Z",
-      "to": ""
-    },
-    {
-      "from": "Minecraft",
-      "description": "Hola",
-      "amount": 123,
-      "date": "2019-03-24T20:14:33.247Z",
-      "to": ""
-    },
-    {
-      "from": "",
-      "description": "Frone",
-      "amount": 123,
-      "date": "2019-03-24T20:14:53.942Z",
-      "to": "Gigel"
-    },
-    {
-      "from": "",
-      "description": "123",
-      "amount": 123,
-      "date": "2019-03-24T20:15:38.232Z",
-      "to": "123"
-    },
-    {
-      "from": "Michael",
-      "description": "asd",
-      "amount": 123,
-      "date": "2019-03-25T17:47:47.530Z",
-      "to": ""
-    },
-    {
-      "from": "asd",
-      "description": "asd",
-      "amount": 123,
-      "date": "2019-03-26T08:22:26.609Z",
-      "to": ""
-    },
-    {
-      "from": "",
-      "description": "COLOMBIA",
-      "amount": 99,
-      "date": "2019-03-26T08:22:41.650Z",
-      "to": "HOLA"
-    },
-    {
-      "from": "qwe",
-      "description": "qwe",
-      "amount": 123,
-      "date": "2019-03-26T08:45:45.053Z",
-      "to": ""
-    },
-    {
-      "from": "moragna",
-      "description": "something random",
-      "amount": 123,
-      "date": "2019-03-26T20:15:05.819Z",
-      "to": ""
-    },
-    {
-      "from": "",
-      "description": "2k19",
-      "amount": 123,
-      "date": "2019-03-26T20:15:36.776Z",
-      "to": "i5asd"
     }
   ]
 }

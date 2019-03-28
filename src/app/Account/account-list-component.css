@@ -11,6 +11,7 @@
     overflow: auto;
     margin-top: 20px;
 }
+
 #table-scroll table thead {
     position: relative;
 }

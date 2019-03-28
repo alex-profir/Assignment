@@ -30,6 +30,9 @@ export class AccountAddComponent implements OnInit{
   }
   ngOnInit(){
     this.balanceForm = this.createDebits();
+    this.balanceForm.get('to').valueChanges.subscribe(
+      () => this.setType()
+    );
   }
   setDebitData(): void {
     const aux: string = this.balanceForm.get('from').value;

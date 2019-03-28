@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Balance } from './Balance';
 import { BalanceService } from '../services/balance.service';
-import { FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn, FormArray } from '@angular/forms';
-import { debounceTime } from 'rxjs/operators';
-import { AccountAddComponent } from './account-add-component'
 @Component({
   selector: 'account-root',
   templateUrl: './account-info.component.html',
@@ -12,13 +9,11 @@ import { AccountAddComponent } from './account-add-component'
 
 
 export class AccountInfoComponent implements OnInit {
-  balanceForm: FormGroup;
   errorMessage = '';
   allGood = true;
   isCredit = true;
 
-  constructor(private balanceservice: BalanceService,
-    private fb: FormBuilder) {
+  constructor(private balanceservice: BalanceService) {
 
 
   }
