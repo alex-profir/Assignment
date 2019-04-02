@@ -1,23 +1,23 @@
-import { Component, Output, EventEmitter, OnInit } from '@angular/core'
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { FormGroup, Validators, FormBuilder, AbstractControl, ValidatorFn } from '@angular/forms';
 import { BalanceService } from '../services/balance.service';
-import { FormBuilder, FormGroup, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 
 function amountRange(min: number, max: number): ValidatorFn {
   return (c: AbstractControl): { [key: string]: boolean } | null => {
     if (c.value !== null && (isNaN(c.value) || c.value < min || c.value > max)) {
-      return { 'range': true };
+      return { 'range' : true };
     }
     return null;
   };
 }
 
-@Component({
-  selector: 'account-add',
-  templateUrl: 'account-add-component.html',
-  styleUrls: ['./account-add-component.css']
-})
 
-export class AccountAddComponent implements OnInit{
+@Component({
+  selector: 'app-account-add',
+  templateUrl: './account-add.component.html',
+  styleUrls: ['./account-add.component.css']
+})
+export class AccountAddComponent implements OnInit {
   @Output() notify: EventEmitter<string> = new EventEmitter<string>();
 
   isCredit = true;
@@ -25,7 +25,7 @@ export class AccountAddComponent implements OnInit{
   balanceForm: FormGroup;
 
   constructor(private balanceservice: BalanceService,
-    private fb: FormBuilder) {
+              private fb: FormBuilder) {
 
   }
   ngOnInit(){
@@ -54,8 +54,7 @@ export class AccountAddComponent implements OnInit{
         to: 'credit'
       });
       this.isCredit = true;
-    }
-    else {
+    } else {
       const aux = this.balanceForm.get('to').value;
       this.balanceForm.patchValue({
         from: aux,

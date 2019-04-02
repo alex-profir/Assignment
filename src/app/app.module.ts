@@ -3,10 +3,10 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AccountInfoComponent } from './account/account-info.component';
-import { AccountListComponent } from './account/account-list-component'
+import { AccountInfoComponent } from './balance/account-info.component';
+import { AccountListComponent } from './balance/account-list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AccountAddComponent } from './account/account-add-component';
+import { AccountAddComponent } from './balance/account-add.component';
 
 @NgModule({
   declarations: [

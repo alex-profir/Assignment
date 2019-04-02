@@ -1,0 +1,101 @@
+<div class='container'>
+  <div class='card'>
+      <div class='card-header bg-info text-white'>
+          <h2>Add new entries:</h2>
+      </div>
+      <div class='card-body'>
+          <form novalidate (ngSubmit)="saveBalance()" [formGroup]="balanceForm">
+              <div class="form-group row mb-2">
+                  <label class="col-md-2 col-form-label" for="fromId">
+                      {{isCredit ? "From" : "To"}} </label>
+                  <div class="col-md-8">
+                      <input class="form-control" id="fromId" type="text"
+                          placeholder="{{isCredit ? 'From' : 'To'}}...(required)" formControlName="from" [ngClass]="{'is-invalid': (balanceForm.get('from').touched ||
+                               balanceForm.get('from').dirty) &&
+                                                          !balanceForm.get('from').valid }" />
+                      <span class="invalid-feedback">
+                          <span *ngIf="balanceForm.get('from').errors?.required">
+                              Please enter your name.
+                          </span>
+                          <span *ngIf="balanceForm.get('from').errors?.minlength">
+                              The name must be longer than 3 characters.
+                          </span>
+                      </span>
+                  </div>
+              </div>
+
+              <div class="form-group row mb-2">
+                  <label class="col-md-2 col-form-label" for="descriptionId">Description:</label>
+                  <div class="col-md-8">
+                      <input class="form-control" id="descriptionId" type="text"
+                          placeholder="Description...(required)" formControlName="description" [ngClass]="{'is-invalid': (balanceForm.get('description').touched ||
+                                   balanceForm.get('description').dirty) &&
+                                                              !balanceForm.get('description').valid }" />
+                      <span class="invalid-feedback">
+                          <span *ngIf="balanceForm.get('description').errors?.required">
+                              A description is required
+                          </span>
+                          <span *ngIf="balanceForm.get('description').errors?.minlength">
+                              The description must be longer than 3 characters
+                          </span>
+                      </span>
+                  </div>
+              </div>
+
+
+              <div class="form-group row mb-2">
+                  <label class="col-md-2 col-form-label" for="amountId">Amount:</label>
+                  <div class="col-md-8">
+                      <input class="form-control" id="amountId" type="number" placeholder="Amount...(required)"
+                          formControlName="amount" [ngClass]="{'is-invalid': (balanceForm.get('amount').touched ||
+                                   balanceForm.get('amount').dirty) &&
+                                                              !balanceForm.get('amount').valid }" />
+                      <span class="invalid-feedback">
+                          <span *ngIf="balanceForm.get('amount').errors?.required">
+                              An amount is required
+                          </span>
+                          <span *ngIf="balanceForm.get('amount').errors?.range">
+                              The number you entered is not in the allowed range ( if you wish to enter a larger
+                              number please visit
+                              your local bank)
+                          </span>
+                      </span>
+                  </div>
+              </div>
+
+              <div class="form-group row mb-2">
+                  <label class="col-md-2 col-form-label pt-0">Type of transfer</label>
+                  <div class="col-md-8">
+                      <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                              <input class="form-check-input" type="radio" value="credit" formControlName="to"> Credit
+                          </label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                              <input class="form-check-input" type="radio" value="debit" formControlName="to"> Debit
+                          </label>
+                      </div>
+                  </div>
+              </div>
+
+
+              <div class="form-group row mb-2">
+                  <button class="btn btn-primary mr-3" type="submit" style="width:80px"
+                      [title]="balanceForm.valid ? 'Save your entered data' : 'Disabled until the form data is valid'"
+                      [disabled]="!balanceForm.valid">
+                      {{errorMessage ? 'Try Again!' : 'Save'}}
+                  </button>
+                  <div *ngIf='errorMessage'>
+                      Uh Oh , something went wrong...please try again ( Just insist on the button , it will work ;) )
+                  </div>
+              </div>
+          </form>
+      </div>
+  </div>
+</div>
+<!-- <br>Dirty: {{ balanceForm.dirty }}
+<br>Touched: {{ balanceForm.touched }}
+<br>Valid: {{ balanceForm.valid }}
+<br>Value: {{ balanceForm.value | json }}
+<br>isCredit: {{ isCredit }} -->

@@ -4,8 +4,8 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
 
 
-import { Balance } from '../account/Balance';
-import { DebitsAndCredits } from '../account/debitsAndCredits';
+import { Balance } from '../balance/Balance';
+import { DebitsAndCredits } from '../balance/debitsAndCredits';
 
 @Injectable({
   providedIn: 'root'

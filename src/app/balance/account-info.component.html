@@ -1,0 +1,51 @@
+<div *ngIf='balance'>
+  <div class='container'>
+    <div class='card'>
+      <div class='card-header bg-info text-white'>
+        <div class='row'>
+          <div class='col-md-4'>
+            <h2>Account Info</h2>
+          </div>
+        </div>
+      </div>
+      <div class='card-body'>
+        <div class='row'>
+          <div class='col-md-8'>
+            <div class='row'>
+              <div class='col'>Name:</div>
+              <div class='col-sm-4'>{{balance.account.name}}</div>
+            </div>
+            <div class='row'>
+              <div class='col'>Iban :</div>
+              <div class='col-sm-4'>{{balance.account.iban}}</div>
+            </div>
+            <div class='row'>
+              <div class='col'>Balance :</div>
+              <div class='col-sm-4'>{{balance.account.balance|currency:'EUR':symbol:'1.2-2' }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <app-account-add (notify)='onNotify($event)'>
+
+  </app-account-add>
+  <br>
+  <app-account-list [dataList]='balance.debitsAndCredits'>
+
+  </app-account-list>
+</div>
+<div *ngIf='!balance'>
+  <div *ngIf="!allGood">
+    <h1>500 Internal Server Error</h1>
+    <p>
+      Ooops , something went really wrong
+    </p>
+    <p>
+      The internal server has encountered some difficulties , please reload your page
+    </p>
+  </div>
+</div>
+<br>&nbsp;
