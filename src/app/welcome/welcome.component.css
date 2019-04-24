@@ -1,0 +1,20 @@
+.game-container {
+  width: 650px;
+  position: relative;
+  display: block;
+  margin: auto;
+  background-color: #47565A;
+  border-radius: 5px;
+}
+
+.row {
+  height: 26px;
+
+}
+
+.column {
+  border: 1px solid rgba(97, 131, 138, .1);
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+}

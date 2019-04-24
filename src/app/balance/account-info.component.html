@@ -37,15 +37,17 @@
 
   </app-account-list>
 </div>
-<div *ngIf='!balance'>
-  <div *ngIf="!allGood">
-    <h1>500 Internal Server Error</h1>
-    <p>
-      Ooops , something went really wrong
-    </p>
-    <p>
-      The internal server has encountered some difficulties , please reload your page
-    </p>
+<div class="container">
+  <div *ngIf='!balance'>
+    <div *ngIf="!allGood">
+      <h1>503 Service Unavailable</h1>
+      <p>
+        Ooops , something went really wrong
+      </p>
+      <p>
+        The internal server has encountered some difficulties , please reload your page
+      </p>
+    </div>
   </div>
 </div>
 <br>&nbsp;

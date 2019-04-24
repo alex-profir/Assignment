@@ -6,7 +6,7 @@ import { DebitsAndCredits } from './debitsAndCredits';
   templateUrl: './account-list.component.html',
   styleUrls: ['./account-list.component.css']
 })
-export class AccountListComponent{
+export class AccountListComponent {
 
   constructor() { }
 
