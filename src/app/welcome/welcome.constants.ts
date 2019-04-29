@@ -9,7 +9,7 @@ export const controls = {
 
 export const colors = {
   board: '#000000',
-  head: '#FF0000',
+  head: '#FFFF00',
   body: '#008000',
-  fruit: '#FFA500'
+  fruit: '#FF0000'
 };
