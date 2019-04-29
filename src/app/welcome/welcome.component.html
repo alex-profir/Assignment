@@ -1,12 +1,15 @@
 <br>
-<div class="game-container">
+<div class="container" [ngStyle]="{'width': '320px','background-color': '#000000'}">
+  <span *ngIf="gameOver">
+    <img class="image" src="https://juststickers.in/wp-content/uploads/2018/01/developer-game-over.png">
+  </span>
   <div class="row" *ngFor="let column of board; let i = index;">
     <div class="column" [ngStyle]="{'background-color': setColors(i, j)}" *ngFor="let row of column; let j = index">
       <!-- {{j}} -->
     </div>
   </div>
 </div>
-
+<br>
 <p>
-  It should overlap but .. yeah
+  Direction :{{direction}}
 </p>

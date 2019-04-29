@@ -1,20 +1,17 @@
-.game-container {
-  width: 650px;
-  position: relative;
-  display: block;
-  margin: auto;
-  background-color: #47565A;
-  border-radius: 5px;
-}
 
 .row {
-  height: 26px;
-
+  height: 18px;
 }
 
-.column {
-  border: 1px solid rgba(97, 131, 138, .1);
-  width: 24px;
-  height: 24px;
+.column { 
+  border: 1px solid black;
+  width: 16px;
+  height: 16px;
   display: inline-block;
 }
+.image{
+  width: 300px;
+  height: 200px;
+  position: absolute;
+  top:100px;
+} 

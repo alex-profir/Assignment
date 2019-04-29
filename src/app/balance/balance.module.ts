@@ -5,7 +5,6 @@ import { AccountInfoComponent } from './account-info.component';
 import { AccountAddComponent } from './account-add.component';
 import { AccountListComponent } from './account-list.component';
 import { CommonModule } from '@angular/common';
-import { SnekComponent } from './snek/snek.component';
 
 
 
@@ -21,7 +20,6 @@ import { SnekComponent } from './snek/snek.component';
     AccountInfoComponent,
     AccountAddComponent,
     AccountListComponent,
-    SnekComponent,
   ]
 })
 export class BalanceModule { }
