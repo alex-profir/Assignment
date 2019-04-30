@@ -6,18 +6,20 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { BalanceModule } from './balance/balance.module';
 import { WelcomeComponent } from './welcome/welcome.component';
-
+import { SnekComponent } from './snek/snek.component';
 @NgModule({
   declarations: [
     AppComponent,
     WelcomeComponent,
-  ],
+    SnekComponent
+  ], 
   imports: [
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
     RouterModule.forRoot([
       { path : 'welcome' , component: WelcomeComponent },
+      { path : 'snek' , component: SnekComponent},
       { path: '', redirectTo: 'welcome', pathMatch: 'full' },
       { path: '**', redirectTo: 'welcome', pathMatch: 'full' }
     ]),

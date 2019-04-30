@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
     CommonModule,
     ReactiveFormsModule,
     RouterModule.forChild([
-      { path: 'balance', component: AccountInfoComponent },
+      { path: 'assignment', component: AccountInfoComponent },
     ]),
   ],
   declarations: [

@@ -1,16 +1,8 @@
-<br>
-<div class="container" [ngStyle]="{'width': '320px','background-color': '#000000'}">
-  <span *ngIf="gameOver">
-    <img class="image" src="https://juststickers.in/wp-content/uploads/2018/01/developer-game-over.png">
-  </span>
-  <div class="row" *ngFor="let column of board; let i = index;">
-    <div class="column" [ngStyle]="{'background-color': setColors(i, j)}" *ngFor="let row of column; let j = index">
-      <!-- {{j}} -->
-    </div>
-  </div>
-  <button type="button" class="btn btn-dark btn-lg btn-block" (click)="newGame()">New Game</button>
-</div> 
-<br>
-<p>
-  Direction :{{direction}} 
-</p>
+<div class="center">
+    <h2>Welcome to my Application</h2>
+    <a class="github-button" href="https://github.com/alex-profir" data-size="large"
+        aria-label="Follow @ntkme on GitHub">GitHub</a>
+</div>
+
+
+<!-- Place this tag where you want the button to render. -->

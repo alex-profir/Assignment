@@ -3,7 +3,7 @@
     left: -80px;
     transition: 0.3s;
     padding: 10px;
-    width: 100px;
+    width: 150px;
     text-decoration: none;
     font-size: 20px;
     color: white;
@@ -19,7 +19,23 @@
     background-color: #4CAF50;
 }
 
-#balance {
+#assignment {
     top: 80px;
     background-color: #2196F3;
+}
+
+#special {
+    top: 140px;
+    background-color: #ff4d4d
+}
+
+body, html {
+    height: 100%
+}
+
+.bgimg {
+    background-image: url('https://images.wallpaperscraft.com/image/panda_smile_white_black_minimalist_74449_1920x1080.jpg');
+    min-height: 100%;
+    background-position: center;
+    background-size: cover;
 }

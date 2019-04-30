@@ -1,0 +1,33 @@
+.row {
+  height: 18px;
+}
+
+.column {
+  border: 1px solid black;
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+}
+
+.image {
+  width: 300px;
+  height: 200px;
+  position: absolute;
+  top: 100px;
+}
+.container{
+  width: 320px;
+  position: absolute;
+  background-color: #000000;
+  top:10%;
+  left:10%;
+}
+.text{
+  position: absolute;
+}
+.new-game{
+  position: absolute;
+  top:50%;
+  left:10%;
+  width:320px;
+}
