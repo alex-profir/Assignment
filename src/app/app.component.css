@@ -28,11 +28,6 @@
     top: 140px;
     background-color: #ff4d4d
 }
-
-body, html {
-    height: 100%
-}
-
 .bgimg {
     background-image: url('https://images.wallpaperscraft.com/image/panda_smile_white_black_minimalist_74449_1920x1080.jpg');
     min-height: 100%;

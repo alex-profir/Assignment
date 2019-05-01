@@ -1,11 +1,12 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { boardSize, colors, controls } from './snek.constants';
+import { Vei2 } from './vei2';
 
 @Component({
   selector: 'app-snek',
   templateUrl: './snek.component.html',
-  styleUrls: ['./snek.component.css'],  
-// tslint:disable-next-line: use-host-property-decorator
+  styleUrls: ['./snek.component.css'],
+  // tslint:disable-next-line: use-host-property-decorator
   host: {
     '(document:keydown)': 'handleKeyboardEvents($event)'
   }
@@ -16,7 +17,7 @@ export class SnekComponent {
   gameOver = false;
   isGoing = false;
   board = [];
-  snake = {
+  private snake = {
     direction: controls.left,
     parts: [
       {
@@ -25,11 +26,17 @@ export class SnekComponent {
       }
     ]
   };
+  private fruit: Vei2 = {
+    x: -1,
+    y: -1
+  };
   constructor() {
     this.setBoard();
   }
   setColors(col: number, row: number): string {
-    if (this.snake.parts[0].x === row && this.snake.parts[0].y === col) {
+    if (this.fruit.x === row && this.fruit.y === col) {
+      return colors.fruit;
+    } else if (this.snake.parts[0].x === row && this.snake.parts[0].y === col) {
       return colors.head;
     } else if (this.board[col][row] === true) {
       return colors.body;
@@ -49,7 +56,7 @@ export class SnekComponent {
     }
   }
 
-  setBoard(): void {
+  setBoard() {
     this.board = [];
 
     for (let i = 0; i < boardSize; i++) {
@@ -58,11 +65,40 @@ export class SnekComponent {
         this.board[i][j] = false;
       }
     }
-  } 
-  
-  repositionHead(): any {
-    let newHead = Object.assign({}, this.snake.parts[0]);
+  }
+  eatFruit() {
+    const tail = Object.assign({}, this.snake.parts[this.snake.parts.length - 1]);
+    this.snake.parts.push(tail);
+    this.resetFruit();
+  }
 
+  fruitCollision(part: Vei2): boolean {
+    return part.x === this.fruit.x && part.y === this.fruit.y;
+  }
+
+  selfCollision(part: Vei2): boolean {
+    return this.board[part.y][part.x] === true;
+  }
+
+  boardCollision(part: Vei2): boolean {
+    return part.x === boardSize || part.x === -1 || part.y === boardSize || part.y === -1;
+  }
+  resetFruit() {
+    const x = Math.floor(Math.random() * boardSize);
+    const y = Math.floor(Math.random() * boardSize);
+
+    if (this.board[y][x] === true) {
+      return this.resetFruit();
+    }
+
+    this.fruit = {
+      x: x,
+      y: y
+    };
+  }
+
+  repositionHead(): Vei2 {
+    const newHead = Object.assign({}, this.snake.parts[0]);
     if (this.direction === controls.left) {
       newHead.x -= 1;
     } else if (this.direction === controls.right) {
@@ -76,12 +112,18 @@ export class SnekComponent {
     return newHead;
   }
 
-  updatePositions(): void {
-    let newHead = this.repositionHead();
-    let me = this;
+  updatePositions() {
+    const newHead = this.repositionHead();
+    if (this.boardCollision(newHead)) {
+      return this.endGame();
+    }
 
-
-    let oldTail = this.snake.parts.pop();
+    if (this.selfCollision(newHead)) {
+      return this.endGame();
+    } else if (this.fruitCollision(newHead)) {
+      this.eatFruit();
+    }
+    const oldTail = this.snake.parts.pop();
     this.board[oldTail.y][oldTail.x] = false;
 
     this.snake.parts.unshift(newHead);
@@ -90,12 +132,15 @@ export class SnekComponent {
     this.snake.direction = this.direction;
 
     setTimeout(() => {
-      me.updatePositions();
+      this.updatePositions();
     }, this.interval);
   }
-  newGame(): void {
+
+  newGame() {
+    this.setBoard();
     this.direction = controls.left;
     this.interval = 150;
+    this.gameOver = false;
     this.isGoing = true;
     this.snake = {
       direction: controls.left,
@@ -103,9 +148,18 @@ export class SnekComponent {
     };
 
     for (let i = 0; i < 3; i++) {
-      this.snake.parts.push({ x: 8 + i, y: 8 });
+      this.snake.parts.push({ x: 14 + i, y: 14 });
     }
+    this.resetFruit();
     this.updatePositions();
   }
+
+  endGame() {
+    setTimeout(() => {
+      this.gameOver = true;
+      this.isGoing = false;
+    }, 500);
+  }
+
 
 }
