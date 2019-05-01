@@ -5,15 +5,18 @@
     </span>
     <div class="row" *ngFor="let column of board; let i = index;">
         <div class="column" [ngStyle]="{'background-color': setColors(i, j)}" *ngFor="let row of column; let j = index">
+            <span *ngIf="special(i,j)">
+                <div class="special">
+
+                </div>
+            </span>
         </div>
     </div>
 </div>
 <div class="new-game">
+    Score : {{score}}
     <span *ngIf="!isGoing">
         <button type="button" class="btn btn-dark btn-lg btn-block" (click)="newGame()">New Game</button>
-    </span>
-    <span *ngIf="isGoing">
-        Direction : {{direction}}
     </span>
 </div>
 <br>

@@ -17,6 +17,11 @@ export class SnekComponent {
   gameOver = false;
   isGoing = false;
   board = [];
+  score = 0;
+  private specialFruit: Vei2 = {
+    x: -1,
+    y: -1
+  }
   private snake = {
     direction: controls.left,
     parts: [
@@ -43,7 +48,11 @@ export class SnekComponent {
     }
     return colors.board;
   }
-
+  special(col: number, row: number): boolean {
+    if (this.specialFruit.x === row && this.specialFruit.y === col) {
+      return true;
+    }
+  }
   handleKeyboardEvents(e: KeyboardEvent) {
     if (e.keyCode === controls.left && this.direction !== controls.right) {
       this.direction = controls.left;
@@ -67,11 +76,43 @@ export class SnekComponent {
     }
   }
   eatFruit() {
+    this.score++;
     const tail = Object.assign({}, this.snake.parts[this.snake.parts.length - 1]);
     this.snake.parts.push(tail);
     this.resetFruit();
+    if (this.score % 12 === 1 ){
+      this.specialFruitReset();
+    }
   }
 
+  eatSpecial() {
+    const tail = Object.assign({}, this.snake.parts[this.snake.parts.length - 1]);
+    this.snake.parts.push(tail);
+    this.specialFruit = {
+      x: -1,
+      y: -1
+    };
+    const aux = this.interval;
+    this.interval -= 50;
+    setTimeout(() => {
+      this.interval = aux;
+    }, 5000);
+  }
+  specialFruitCollision(part: Vei2): boolean {
+    return part.x === this.specialFruit.x && part.y === this.specialFruit.y;
+  }
+  specialFruitReset() {
+    const x = Math.floor(Math.random() * boardSize);
+    const y = Math.floor(Math.random() * boardSize);
+
+    if (this.board[y][x] === true) {
+      return this.specialFruitReset();
+    }
+    this.specialFruit = {
+      x,
+      y
+    };
+  }
   fruitCollision(part: Vei2): boolean {
     return part.x === this.fruit.x && part.y === this.fruit.y;
   }
@@ -83,6 +124,7 @@ export class SnekComponent {
   boardCollision(part: Vei2): boolean {
     return part.x === boardSize || part.x === -1 || part.y === boardSize || part.y === -1;
   }
+
   resetFruit() {
     const x = Math.floor(Math.random() * boardSize);
     const y = Math.floor(Math.random() * boardSize);
@@ -92,9 +134,25 @@ export class SnekComponent {
     }
 
     this.fruit = {
-      x: x,
-      y: y
+      x,
+      y
     };
+    if (this.score % 3 === 0) {
+      this.interval -= 5;
+    }
+  }
+
+  noWalls(part: Vei2) {
+    if (part.x === boardSize) {
+      part.x = 0;
+    } else if (part.x === -1) {
+      part.x = boardSize - 1;
+    }
+    if (part.y === boardSize) {
+      part.y = 0;
+    } else if (part.y === -1) {
+      part.y = boardSize - 1;
+    }
   }
 
   repositionHead(): Vei2 {
@@ -117,11 +175,12 @@ export class SnekComponent {
     if (this.boardCollision(newHead)) {
       return this.endGame();
     }
-
     if (this.selfCollision(newHead)) {
       return this.endGame();
     } else if (this.fruitCollision(newHead)) {
       this.eatFruit();
+    } else if (this.specialFruitCollision(newHead)) {
+      this.eatSpecial();
     }
     const oldTail = this.snake.parts.pop();
     this.board[oldTail.y][oldTail.x] = false;
@@ -140,6 +199,7 @@ export class SnekComponent {
     this.setBoard();
     this.direction = controls.left;
     this.interval = 150;
+    this.score = 0;
     this.gameOver = false;
     this.isGoing = true;
     this.snake = {
